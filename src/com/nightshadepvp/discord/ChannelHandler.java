@@ -17,4 +17,8 @@ public class ChannelHandler {
         return Main.getJda().getTextChannelById(429732109121224724L);
     }
 
+    public MessageChannel getSuggestionsChannel(){
+        return  Main.getJda().getTextChannelById(429732129707130883L);
+    }
+
 }

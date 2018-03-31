@@ -61,8 +61,13 @@ public class Listener extends ListenerAdapter{
     }
 
     public void onMessageReactionAdd(MessageReactionAddEvent e){
-        if(e.getChannel().getIdLong() == main.getChannelHandler().getBugsChannel().getIdLong()){
 
+        if(e.getUser().isFake() || e.getUser().isBot()) return;
+
+        if(e.getChannel().getIdLong() == main.getChannelHandler().getBugsChannel().getIdLong() || e.getChannel().getIdLong() == main.getChannelHandler().getSuggestionsChannel().getIdLong()){
+            if(e.getReactionEmote().getName().equalsIgnoreCase(":white_check_mark:") || e.getReactionEmote().getName().equalsIgnoreCase("✅")){
+                e.getChannel().deleteMessageById(e.getMessageIdLong()).queue();
+            }
         }
     }
 }

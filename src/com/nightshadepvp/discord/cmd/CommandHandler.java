@@ -23,6 +23,7 @@ public class CommandHandler {
 
     public void registerCommands(){
         registerCommand(new ReportBugCommand(new Main()));
+        registerCommand(new SuggestionCommand(new Main()));
     }
 
     private void registerCommand(Command command){
