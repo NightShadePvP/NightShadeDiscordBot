@@ -3,6 +3,7 @@ package com.nightshadepvp.discord;
 import com.nightshadepvp.discord.cmd.Command;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.util.ArrayList;
@@ -57,5 +58,11 @@ public class Listener extends ListenerAdapter{
 
     public Main getMain() {
         return main;
+    }
+
+    public void onMessageReactionAdd(MessageReactionAddEvent e){
+        if(e.getChannel().getIdLong() == main.getChannelHandler().getBugsChannel().getIdLong()){
+
+        }
     }
 }

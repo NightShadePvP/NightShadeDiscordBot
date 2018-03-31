@@ -1,5 +1,6 @@
 package com.nightshadepvp.discord.cmd;
 
+import com.nightshadepvp.discord.Main;
 import com.nightshadepvp.discord.Settings;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
@@ -8,13 +9,22 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.Role;
 
 import java.awt.*;
-import java.io.*;
-import java.util.concurrent.CompletableFuture;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Created by Blok on 3/31/2018.
  */
 public class ReportBugCommand extends Command{
+
+    private Main main;
+
+    public ReportBugCommand(Main main) {
+        this.main = main;
+    }
+
     /***
      *  @param member Member who sent the message
      * @param args Arguments passed
@@ -37,28 +47,13 @@ public class ReportBugCommand extends Command{
 
         String bug = builder.toString().trim();
 
-        CompletableFuture.supplyAsync(() -> {
-            File file = new File("bugs.txt");
-            try {
-                FileWriter writer = new FileWriter(file, true);
-                PrintWriter pw = new PrintWriter(writer);
-
-                pw.println(getNextID() + ". " + bug);
-
-                pw.close();
-                writer.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }).thenAccept(u -> channel.sendMessage(getSuccess(member).build()).queue());
+        channel.sendMessage(getSuccess(member).build()).queue();
+        main.getChannelHandler().getBugsChannel().sendMessage(getToSend(bug, member).build()).queue();
     }
 
     @Override
     public String getName() {
-        return null;
+        return "reportbug";
     }
 
     @Override
@@ -92,6 +87,18 @@ public class ReportBugCommand extends Command{
         EmbedBuilder success = new EmbedBuilder();
         success.setTitle("Success!");
         success.addField("", "Your bug has been submitted to the developers, " + member.getEffectiveName(), false);
+        success.setColor(new Color(172, 0, 230));
+
+        return success;
+    }
+
+    private EmbedBuilder getToSend(String bug, Member member){
+        EmbedBuilder success = new EmbedBuilder();
+        success.setTitle("Bug Reported!");
+        success.addField("", "A Bug Report has been submitted by " + member.getEffectiveName(), false);
+        success.addBlankField(false);
+        success.addField("", bug, false);
+        success.setFooter("React with a check mark when the bug report is resolved!", null);
         success.setColor(new Color(172, 0, 230));
 
         return success;

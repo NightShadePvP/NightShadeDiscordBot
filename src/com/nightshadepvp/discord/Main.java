@@ -16,6 +16,7 @@ public class Main {
 
     private static JDA jda;
     private static CommandHandler handler;
+    private static ChannelHandler channelHandler;
 
     public static void main(String[] args) throws LoginException, InterruptedException{
         JDABuilder builder = new JDABuilder(AccountType.BOT);
@@ -25,6 +26,7 @@ public class Main {
         jda = builder.buildBlocking();
 
         handler = new CommandHandler();
+        channelHandler = new ChannelHandler(new Main());
         jda.addEventListener(new Listener(new Main()));
         System.out.println("Setup complete!");
     }
@@ -41,4 +43,7 @@ public class Main {
         return getJda().getGuildById(140945203375636480L);
     }
 
+    public ChannelHandler getChannelHandler() {
+        return channelHandler;
+    }
 }

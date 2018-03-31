@@ -1,5 +1,6 @@
 package com.nightshadepvp.discord.cmd;
 
+import com.nightshadepvp.discord.Main;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
@@ -21,7 +22,7 @@ public class CommandHandler {
     }
 
     public void registerCommands(){
-        registerCommand(new ReportBugCommand());
+        registerCommand(new ReportBugCommand(new Main()));
     }
 
     private void registerCommand(Command command){
