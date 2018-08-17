@@ -15,64 +15,62 @@ import java.util.concurrent.ScheduledExecutorService;
 /**
  * Created by Blok on 8/17/2018.
  */
-public class NightShadeBot {
-
+public class NightShadeBot
+{
     private JDA jda;
     private CommandHandler handler;
     private ChannelHandler channelHandler;
     private Jedis jedis;
     private ScheduledExecutorService executorService;
-
     private static NightShadeBot bot;
 
     public NightShadeBot() throws LoginException, InterruptedException {
-        bot = this;
-        JDABuilder builder = new JDABuilder(AccountType.BOT);
+        NightShadeBot.bot = this;
+        final JDABuilder builder = new JDABuilder(AccountType.BOT);
         builder.setToken(Settings.TOKEN);
         builder.setAutoReconnect(true);
         builder.setStatus(OnlineStatus.DO_NOT_DISTURB);
-        jda = builder.buildBlocking();
-        handler = new CommandHandler();
-        channelHandler = new ChannelHandler(new Main());
-        jda.addEventListener(new Listener(new Main()));
-        executorService = Executors.newScheduledThreadPool(5);
-        setupJedis();
+        this.jda = builder.buildBlocking();
+        this.handler = new CommandHandler();
+        this.channelHandler = new ChannelHandler();
+        this.jda.addEventListener(new Listener());
+        this.executorService = Executors.newScheduledThreadPool(5);
+        this.setupJedis();
         System.out.println("NightShadeBot Setup Complete!");
     }
 
     public static NightShadeBot getBot() {
-        return bot;
+        return NightShadeBot.bot;
     }
 
     public CommandHandler getCommandHandler() {
-        return handler;
+        return this.handler;
     }
 
-    public  JDA getJda() {
-        return jda;
+    public JDA getJda() {
+        return this.jda;
     }
 
-    public  Guild getGuild() {
-        return getJda().getGuildById(140945203375636480L);
+    public Guild getGuild() {
+        return this.getJda().getGuildById(140945203375636480L);
     }
 
     public ChannelHandler getChannelHandler() {
-        return channelHandler;
+        return this.channelHandler;
     }
 
-    private void setupJedis(){
-        jedis = new Jedis("localhost");
+    private void setupJedis() {
+        this.jedis = new Jedis("localhost");
     }
 
-    public Jedis getJedis(){
-        if(jedis == null || !jedis.isConnected()){
-            jedis = new Jedis("localhost");
+    public Jedis getJedis() {
+        if (this.jedis == null || !this.jedis.isConnected()) {
+            this.jedis = new Jedis("localhost");
         }
-
-        return jedis;
+        return this.jedis;
     }
 
     public ScheduledExecutorService getExecutorService() {
-        return executorService;
+        return this.executorService;
     }
 }

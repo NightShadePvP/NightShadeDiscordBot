@@ -6,7 +6,13 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/Jars/GSON-2.6.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/Jars/httpasyncclient-4.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/Jars/httpclient-4.3.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/Jars/httpmime-4.3.6.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Desktop/Jars/JDA-3.5.1_339-withDependencies.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/Jars/lombok.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/Jars/unirest-java-1.4.9.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
