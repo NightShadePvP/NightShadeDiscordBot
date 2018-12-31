@@ -1,12 +1,12 @@
 package com.nightshadepvp.discord;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.nightshadepvp.discord.cmd.CommandHandler;
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.OnlineStatus;
+import net.dv8tion.jda.core.*;
 import net.dv8tion.jda.core.entities.Guild;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPubSub;
 
 import javax.security.auth.login.LoginException;
 import java.util.concurrent.Executors;
@@ -36,6 +36,8 @@ public class NightShadeBot
         this.jda.addEventListener(new Listener());
         this.executorService = Executors.newScheduledThreadPool(5);
         this.setupJedis();
+
+        this.setupPunishmentController();
         System.out.println("NightShadeBot Setup Complete!");
     }
 
@@ -72,5 +74,32 @@ public class NightShadeBot
 
     public ScheduledExecutorService getExecutorService() {
         return this.executorService;
+    }
+
+    private void setupPunishmentController() {
+        Jedis jedis = getJedis();
+        jedis.subscribe(new JedisPubSub() {
+            @Override
+            public void onMessage(String channel, String message) {
+
+                if (!channel.equalsIgnoreCase("punishments")) {
+                    return;
+                }
+
+                JsonParser jsonParser = new JsonParser();
+                JsonObject jsonObject = jsonParser.parse(message).getAsJsonObject();
+
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setColor(new java.awt.Color(172, 0, 230));
+                embedBuilder.setTitle("New Punishment!");
+                embedBuilder.addField("Type:", jsonObject.get("type").getAsString(), false);
+                embedBuilder.addField("Player:", jsonObject.get("player").getAsString(), false);
+                embedBuilder.addField("Staff Member:", jsonObject.get("punisher").getAsString(), false);
+                embedBuilder.addField("Reason: ", jsonObject.get("reason").getAsString(), false);
+                embedBuilder.addField("Length: ", jsonObject.get("length").getAsString(), false);
+
+                getChannelHandler().getStaffLogChannel().sendMessage(embedBuilder.build()).queue();
+            }
+        }, "punishments");
     }
 }

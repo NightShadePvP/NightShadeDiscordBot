@@ -14,4 +14,8 @@ public class ServerUtils {
         return member.getRoles().contains(r);
     }
 
+    public static Role getRole(String role){
+        return NightShadeBot.getBot().getJda().getRolesByName(role, true).get(0);
+    }
+
 }

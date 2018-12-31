@@ -1,5 +1,9 @@
 package com.nightshadepvp.discord.cmd;
 
+import com.nightshadepvp.discord.cmd.staff.GetAttendanceCommand;
+import com.nightshadepvp.discord.cmd.staff.StartUHC1Command;
+import com.nightshadepvp.discord.cmd.staff.StartUHC2Command;
+import com.nightshadepvp.discord.cmd.staff.WhitelistCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
@@ -30,6 +34,10 @@ public class CommandHandler
         this.registerCommand(new DemoteCommand());
         this.registerCommand(new PromoteCommand());
         this.registerCommand(new LinkCommand());
+        this.registerCommand(new WhitelistCommand());
+        this.registerCommand(new GetAttendanceCommand());
+        this.registerCommand(new StartUHC1Command());
+        this.registerCommand(new StartUHC2Command());
     }
 
     private void registerCommand(final Command command) {
@@ -42,10 +50,9 @@ public class CommandHandler
         builder.setColor(Color.RED);
         for (final Command c : this.commands) {
             if (c.getName().equalsIgnoreCase(command.getName())) {
-                if (c.requiredRole() == null || sender.getRoles().contains(c.requiredRole())) {
+                if (c.requiredRole() == null || (sender.getRoles().size() != 0 && sender.getRoles().get(0).getPosition() >= c.requiredRole().getPosition())) {
                     c.run(sender, args, channel, message);
-                }
-                else {
+                } else {
                     builder.addField("", "You don't have permission to do this command, " + sender.getEffectiveName(), false);
                     channel.sendMessage(builder.build()).queue();
                 }

@@ -56,7 +56,7 @@ public class PromoteCommand extends Command {
 
     @Override
     public Role requiredRole() {
-        return NightShadeBot.getBot().getGuild().getRolesByName("Jr. Administrator", false).get(0);
+        return NightShadeBot.getBot().getGuild().getRolesByName("Administrator", false).get(0);
     }
 
     private EmbedBuilder getUsage() {

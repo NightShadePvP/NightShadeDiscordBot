@@ -1,12 +1,14 @@
 package com.nightshadepvp.discord;
 
 import com.nightshadepvp.discord.cmd.Command;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -52,6 +54,10 @@ public class Listener extends ListenerAdapter
                 return;
             }
             e.getMessage().delete().queue();
+            EmbedBuilder embedBuilder = new EmbedBuilder().setColor(Color.RED);
+            embedBuilder.addField("Someone thought they were slick...", e.getMember().getEffectiveName() + " tried to tag NewGame", true);
+            embedBuilder.setThumbnail(user.getAvatarUrl());
+            NightShadeBot.getBot().getChannelHandler().getStaffLogChannel().sendMessage(embedBuilder.build()).queue();
         }
     }
 

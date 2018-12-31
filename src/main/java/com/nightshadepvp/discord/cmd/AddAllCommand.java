@@ -1,6 +1,7 @@
 package com.nightshadepvp.discord.cmd;
 
 import com.nightshadepvp.discord.NightShadeBot;
+import com.nightshadepvp.discord.utils.ServerUtils;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
@@ -31,6 +32,6 @@ public class AddAllCommand extends Command {
 
     @Override
     public Role requiredRole() {
-        return NightShadeBot.getBot().getGuild().getRolesByName("Owner", false).get(0);
+        return ServerUtils.getRole("Owner");
     }
 }

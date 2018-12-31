@@ -3,6 +3,7 @@ package com.nightshadepvp.discord.cmd;
 import com.nightshadepvp.discord.NightShadeBot;
 import com.nightshadepvp.discord.Settings;
 import com.nightshadepvp.discord.utils.ParseUtils;
+import com.nightshadepvp.discord.utils.ServerUtils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
 
@@ -55,6 +56,7 @@ public class DemoteCommand extends Command
             stringBuilder.append(args[i]).append(" ");
         }
         final String reason = stringBuilder.toString().trim();
+
         NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
         NightShadeBot.getBot().getChannelHandler().getRoleLogChannel().sendMessage(this.getOutput(NightShadeBot.getBot().getGuild().getMember(targetMember), newRole, Boolean.parseBoolean(args[2]), reason).build()).queue();
     }
@@ -66,7 +68,7 @@ public class DemoteCommand extends Command
 
     @Override
     public Role requiredRole() {
-        return NightShadeBot.getBot().getGuild().getRolesByName("Jr. Administrator", false).get(0);
+        return ServerUtils.getRole("Administrator");
     }
 
     private EmbedBuilder getUsage() {

@@ -35,7 +35,7 @@ public class SetPlayingCommand extends Command {
 
     @Override
     public Role requiredRole() {
-        return NightShadeBot.getBot().getGuild().getRolesByName("Admininstrator", false).get(0);
+        return NightShadeBot.getBot().getGuild().getRolesByName("Administrator", false).get(0);
     }
 
     private EmbedBuilder getUsage() {
