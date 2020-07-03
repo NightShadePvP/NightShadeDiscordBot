@@ -17,6 +17,12 @@ import java.util.concurrent.TimeUnit;
  * Created by Blok on 8/20/2018.
  */
 public class WhitelistCommand extends Command {
+    
+    private NightShadeBot nightShadeBot;
+
+    public WhitelistCommand(NightShadeBot nightShadeBot) {
+        this.nightShadeBot = nightShadeBot;
+    }
 
     private HashSet<String> whitelistedPlayers = new HashSet<>();
 
@@ -24,15 +30,15 @@ public class WhitelistCommand extends Command {
     public void run(Member member, String[] args, MessageChannel channel, Message message) {
         //>whitelist name
         if (args.length != 2) {
-            NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+            nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
             member.getUser().openPrivateChannel().queue(privateChannel -> {
                 privateChannel.sendMessage("Please specify a singular user in #pre-whitelist").queue();
             });
             return;
         }
 
-        if (!NightShadeBot.getBot().getChannelHandler().getPreWhitelistChannel().getId().equalsIgnoreCase(channel.getId())) {
-            NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+        if (!nightShadeBot.getChannelHandler().getPreWhitelistChannel().getId().equalsIgnoreCase(channel.getId())) {
+            nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
             member.getUser().openPrivateChannel().queue(privateChannel -> {
                 privateChannel.sendMessage("Please only execute this command in #pre-whitelist!").queue();
             });
@@ -42,7 +48,7 @@ public class WhitelistCommand extends Command {
         String player = args[0];
 
         if (whitelistedPlayers.contains(player)) {
-            NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+            nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
             member.getUser().openPrivateChannel().queue(privateChannel -> {
                 privateChannel.sendMessage("You have already requested that account to be pre-whitelisted!").queue();
             });
@@ -52,22 +58,22 @@ public class WhitelistCommand extends Command {
         String server = args[1];
         if (server.equalsIgnoreCase("UHC1") || server.equalsIgnoreCase("UHC2")) {
             whitelistedPlayers.add(player);
-            NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+            nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
             try {
                 Runtime.getRuntime().exec("screen -S " + server.toLowerCase() + "-X stuff ewl add " + player + "^M");
             } catch (IOException e) {
-                NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+                nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
                 member.getUser().openPrivateChannel().queue(privateChannel -> {
                     privateChannel.sendMessage("There was a problem whitelisting your account!").queue();
                 });
                 e.printStackTrace();
                 return;
             }
-            NightShadeBot.getBot().getChannelHandler().getStaffLogChannel().sendMessage(getToSend(player, server, member).build()).queue();
+            nightShadeBot.getChannelHandler().getStaffLogChannel().sendMessage(getToSend(player, server, member).build()).queue();
 
 
         } else {
-            NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+            nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
             member.getUser().openPrivateChannel().queue(privateChannel -> {
                 privateChannel.sendMessage("The server must be UHC1 or UHC2!").queue();
             });

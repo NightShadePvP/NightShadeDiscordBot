@@ -13,13 +13,20 @@ import java.awt.*;
  * Created by Blok on 8/17/2018.
  */
 public class NewGameCommand extends Command {
+    
+    private NightShadeBot nightShadeBot;
+
+    public NewGameCommand(NightShadeBot nightShadeBot) {
+        this.nightShadeBot = nightShadeBot;
+    }
+
     @Override
     public void run(final Member member, final String[] args, final MessageChannel channel, final Message message) {
-        if (member.getRoles().contains(NightShadeBot.getBot().getGuild().getRolesByName("NewGame", false).get(0))) {
-            NightShadeBot.getBot().getGuild().getController().removeRolesFromMember(member, NightShadeBot.getBot().getGuild().getRolesByName("NewGame", false).get(0)).queue();
+        if (member.getRoles().contains(nightShadeBot.getGuild().getRolesByName("NewGame", false).get(0))) {
+            nightShadeBot.getGuild().getController().removeRolesFromMember(member, nightShadeBot.getGuild().getRolesByName("NewGame", false).get(0)).queue();
             channel.sendMessage(this.toggleOff(member).build()).queue();
         } else {
-            NightShadeBot.getBot().getGuild().getController().addRolesToMember(member, NightShadeBot.getBot().getGuild().getRolesByName("NewGame", false).get(0)).queue();
+            nightShadeBot.getGuild().getController().addRolesToMember(member, nightShadeBot.getGuild().getRolesByName("NewGame", false).get(0)).queue();
             channel.sendMessage(this.toggleOn(member).build()).queue();
         }
     }

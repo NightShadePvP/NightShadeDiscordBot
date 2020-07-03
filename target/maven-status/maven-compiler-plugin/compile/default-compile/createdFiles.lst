@@ -1,4 +1,5 @@
 com\nightshadepvp\discord\utils\ServerUtils.class
+com\nightshadepvp\discord\cmd\LinksCommand.class
 com\nightshadepvp\discord\cmd\ReportBugCommand.class
 com\nightshadepvp\discord\cmd\staff\StartUHC1Command.class
 com\nightshadepvp\discord\cmd\staff\StartUHC2Command.class
@@ -7,7 +8,6 @@ com\nightshadepvp\discord\cmd\AddAllCommand.class
 com\nightshadepvp\discord\cmd\PromoteCommand.class
 com\nightshadepvp\discord\Listener.class
 com\nightshadepvp\discord\cmd\RoomCommand.class
-com\nightshadepvp\discord\cmd\staff\CreateMatchCommand.class
 com\nightshadepvp\discord\cmd\GetLogsCommand.class
 com\nightshadepvp\discord\utils\NumberUtils.class
 com\nightshadepvp\discord\cmd\staff\GetAttendanceCommand.class

@@ -13,18 +13,24 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Blok on 8/17/2018.
  */
-public class DemoteCommand extends Command
-{
+public class DemoteCommand extends Command {
+    
+    private NightShadeBot nightShadeBot;
+
+    public DemoteCommand(NightShadeBot nightShadeBot) {
+        this.nightShadeBot = nightShadeBot;
+    }
+
     @Override
     public void run(final Member member, final String[] args, final MessageChannel channel, final Message message) {
         if (args.length < 3) {
-            NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+            nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
             member.getUser().openPrivateChannel().queue(privateChannel -> privateChannel.sendMessage(this.getUsage().build()).queue());
             return;
         }
         final User targetMember = message.getMentionedUsers().get(0);
         if (targetMember == null) {
-            NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+            nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
             member.getUser().openPrivateChannel().queue(privateChannel -> {
                 privateChannel.sendMessage("You must specify a user to demote!").queue();
                 privateChannel.sendMessage(this.getUsage().build()).queue();
@@ -36,15 +42,15 @@ public class DemoteCommand extends Command
             newRole = null;
         }
         else {
-            if (NightShadeBot.getBot().getGuild().getRolesByName(args[1], true) == null) {
-                NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+            if (nightShadeBot.getGuild().getRolesByName(args[1], true) == null) {
+                nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
                 member.getUser().openPrivateChannel().queue(privateChannel -> privateChannel.sendMessage("That role couldn't be found!").queue());
                 return;
             }
-            newRole = NightShadeBot.getBot().getGuild().getRolesByName(args[1], true).get(0);
+            newRole = nightShadeBot.getGuild().getRolesByName(args[1], true).get(0);
         }
         if (!ParseUtils.isBoolean(args[2])) {
-            NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+            nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
             member.getUser().openPrivateChannel().queue(privateChannel -> {
                 privateChannel.sendMessage("Please specify a valid boolean!").queue();
                 privateChannel.sendMessage(this.getUsage().build()).queue();
@@ -57,8 +63,8 @@ public class DemoteCommand extends Command
         }
         final String reason = stringBuilder.toString().trim();
 
-        NightShadeBot.getBot().getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
-        NightShadeBot.getBot().getChannelHandler().getRoleLogChannel().sendMessage(this.getOutput(NightShadeBot.getBot().getGuild().getMember(targetMember), newRole, Boolean.parseBoolean(args[2]), reason).build()).queue();
+        nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
+        nightShadeBot.getChannelHandler().getRoleLogChannel().sendMessage(this.getOutput(nightShadeBot.getGuild().getMember(targetMember), newRole, Boolean.parseBoolean(args[2]), reason).build()).queue();
     }
 
     @Override

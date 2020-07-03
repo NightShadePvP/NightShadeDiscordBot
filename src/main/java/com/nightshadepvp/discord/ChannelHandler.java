@@ -9,33 +9,38 @@ import net.dv8tion.jda.core.entities.VoiceChannel;
  */
 public class ChannelHandler {
 
+    private NightShadeBot nightShadeBot;
+
+    public ChannelHandler(NightShadeBot nightShadeBot) {
+        this.nightShadeBot = nightShadeBot;
+    }
 
     public MessageChannel getBugsChannel() {
-        return NightShadeBot.getBot().getJda().getTextChannelById(429732109121224724L);
+        return nightShadeBot.getJda().getTextChannelById(429732109121224724L);
     }
 
     public MessageChannel getSuggestionsChannel() {
-        return NightShadeBot.getBot().getJda().getTextChannelById(429732129707130883L);
+        return nightShadeBot.getJda().getTextChannelById(429732129707130883L);
     }
 
     public MessageChannel getPreWhitelistChannel() {
-        return NightShadeBot.getBot().getJda().getTextChannelById(462076542756061214L);
+        return nightShadeBot.getJda().getTextChannelById(462076542756061214L);
     }
 
     public MessageChannel getRoleLogChannel() {
-        return NightShadeBot.getBot().getJda().getTextChannelById(352975356531179522L);
+        return nightShadeBot.getJda().getTextChannelById(352975356531179522L);
     }
 
     public Category getStaffCategory(){
-        return NightShadeBot.getBot().getJda().getCategoryById(373145114685734933L);
+        return nightShadeBot.getJda().getCategoryById(373145114685734933L);
     }
 
     public MessageChannel getStaffLogChannel(){
-        return NightShadeBot.getBot().getJda().getTextChannelById(421097207689641984L);
+        return nightShadeBot.getJda().getTextChannelById(421097207689641984L);
     }
 
     public VoiceChannel getStaffMeetingChannel(){
-        return NightShadeBot.getBot().getJda().getVoiceChannelById(483037056675741712L);
+        return nightShadeBot.getJda().getVoiceChannelById(483037056675741712L);
     }
 
 }

@@ -16,10 +16,16 @@ import java.io.IOException;
  * Created by Blok on 8/25/2018.
  */
 public class GetAttendanceCommand extends Command {
+    
+    private NightShadeBot nightShadeBot;
+
+    public GetAttendanceCommand(NightShadeBot nightShadeBot) {
+        this.nightShadeBot = nightShadeBot;
+    }
 
     @Override
     public void run(Member member, String[] args, MessageChannel channel, Message message) {
-        if(!member.getVoiceState().inVoiceChannel() || member.getVoiceState().getChannel().getIdLong() != NightShadeBot.getBot().getChannelHandler().getStaffMeetingChannel().getIdLong()){
+        if(!member.getVoiceState().inVoiceChannel() || member.getVoiceState().getChannel().getIdLong() != nightShadeBot.getChannelHandler().getStaffMeetingChannel().getIdLong()){
             channel.sendMessage(message.getAuthor().getAsMention() + ", you must be in the staff meeting channel to do this command!").queue();
             return;
         }

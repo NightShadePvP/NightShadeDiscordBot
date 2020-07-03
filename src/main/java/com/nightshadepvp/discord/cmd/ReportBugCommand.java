@@ -13,8 +13,14 @@ import java.awt.*;
 /**
  * Created by Blok on 3/31/2018.
  */
-public class ReportBugCommand extends Command
-{
+public class ReportBugCommand extends Command {
+    
+    private NightShadeBot nightShadeBot;
+
+    public ReportBugCommand(NightShadeBot nightShadeBot) {
+        this.nightShadeBot = nightShadeBot;
+    }
+
     @Override
     public void run(final Member member, final String[] args, final MessageChannel channel, final Message message) {
         if (args == null || args.length == 0) {
@@ -27,7 +33,7 @@ public class ReportBugCommand extends Command
         }
         final String bug = builder.toString().trim();
         channel.sendMessage(this.getSuccess(member).build()).queue();
-        NightShadeBot.getBot().getChannelHandler().getBugsChannel().sendMessage(this.getToSend(bug, member).build()).queue();
+        nightShadeBot.getChannelHandler().getBugsChannel().sendMessage(this.getToSend(bug, member).build()).queue();
     }
 
     @Override

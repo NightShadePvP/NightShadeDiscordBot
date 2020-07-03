@@ -1,5 +1,6 @@
 package com.nightshadepvp.discord.cmd;
 
+import com.nightshadepvp.discord.NightShadeBot;
 import com.nightshadepvp.discord.cmd.staff.GetAttendanceCommand;
 import com.nightshadepvp.discord.cmd.staff.StartUHC1Command;
 import com.nightshadepvp.discord.cmd.staff.StartUHC2Command;
@@ -15,29 +16,34 @@ import java.util.ArrayList;
 /**
  * Created by Blok on 3/18/2018.
  */
-public class CommandHandler
-{
+public class CommandHandler {
     private ArrayList<Command> commands;
 
-    public CommandHandler() {
+    private NightShadeBot nightShadeBot;
+
+    public CommandHandler(NightShadeBot nightShadeBot) {
+        this.nightShadeBot = nightShadeBot;
+
         this.commands = new ArrayList<>();
         this.registerCommands();
     }
 
     public void registerCommands() {
-        this.registerCommand(new ReportBugCommand());
-        this.registerCommand(new SuggestionCommand());
-        this.registerCommand(new GetLogsCommand());
-        this.registerCommand(new NewGameCommand());
-        this.registerCommand(new AddAllCommand());
-        this.registerCommand(new SetPlayingCommand());
-        this.registerCommand(new DemoteCommand());
-        this.registerCommand(new PromoteCommand());
-        this.registerCommand(new LinkCommand());
-        this.registerCommand(new WhitelistCommand());
-        this.registerCommand(new GetAttendanceCommand());
+        this.registerCommand(new ReportBugCommand(nightShadeBot));
+        this.registerCommand(new SuggestionCommand(nightShadeBot));
+        this.registerCommand(new GetLogsCommand(nightShadeBot));
+        this.registerCommand(new NewGameCommand(nightShadeBot));
+        this.registerCommand(new AddAllCommand(nightShadeBot));
+        this.registerCommand(new SetPlayingCommand(nightShadeBot));
+        this.registerCommand(new DemoteCommand(nightShadeBot));
+        this.registerCommand(new PromoteCommand(nightShadeBot));
+        this.registerCommand(new LinkCommand(nightShadeBot));
+        this.registerCommand(new WhitelistCommand(nightShadeBot));
+        this.registerCommand(new GetAttendanceCommand(nightShadeBot));
         this.registerCommand(new StartUHC1Command());
         this.registerCommand(new StartUHC2Command());
+        this.registerCommand(new SetPlayingCommand(nightShadeBot));
+        this.registerCommand(new LinksCommand());
     }
 
     private void registerCommand(final Command command) {

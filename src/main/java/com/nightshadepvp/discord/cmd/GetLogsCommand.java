@@ -19,8 +19,14 @@ import java.util.stream.Collectors;
 /**
  * Created by Blok on 8/17/2018.
  */
-public class GetLogsCommand extends Command
-{
+public class GetLogsCommand extends Command {
+    
+    private NightShadeBot nightShadeBot;
+
+    public GetLogsCommand(NightShadeBot nightShadeBot) {
+        this.nightShadeBot = nightShadeBot;
+    }
+
     @Override
     public void run(final Member member, final String[] args, final MessageChannel channel, final Message message) {
         Date date = new Date();
@@ -46,7 +52,7 @@ public class GetLogsCommand extends Command
 
     @Override
     public Role requiredRole() {
-        return NightShadeBot.getBot().getGuild().getRolesByName("Senior", false).get(0);
+        return nightShadeBot.getGuild().getRolesByName("Senior", false).get(0);
     }
 
     private EmbedBuilder getSuccess(final Member member) {

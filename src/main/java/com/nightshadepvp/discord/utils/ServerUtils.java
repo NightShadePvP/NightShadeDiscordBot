@@ -9,13 +9,19 @@ import net.dv8tion.jda.core.entities.Role;
  */
 public class ServerUtils {
 
+    private static NightShadeBot ref;
+
+    public static void setRef(NightShadeBot ref) {
+        ServerUtils.ref = ref;
+    }
+
     public static boolean userHasRole(String role, Member member){
-        Role r = NightShadeBot.getBot().getGuild().getRolesByName(role, true).get(0);
+        Role r = ref.getGuild().getRolesByName(role, true).get(0);
         return member.getRoles().contains(r);
     }
 
     public static Role getRole(String role){
-        return NightShadeBot.getBot().getJda().getRolesByName(role, true).get(0);
+        return ref.getGuild().getRolesByName(role, true).get(0);
     }
 
 }

@@ -33,6 +33,6 @@ public class StartUHC2Command extends Command {
 
     @Override
     public Role requiredRole() {
-        return ServerUtils.getRole("Staff");
+        return ServerUtils.getRole("Administrator");
     }
 }

@@ -12,6 +12,12 @@ import java.awt.*;
  */
 
 public class SetPlayingCommand extends Command {
+    
+    private NightShadeBot nightShadeBot;
+
+    public SetPlayingCommand(NightShadeBot nightShadeBot) {
+        this.nightShadeBot = nightShadeBot;
+    }
 
     @Override
     public void run(final Member member, final String[] args, final MessageChannel channel, final Message message) {
@@ -24,8 +30,9 @@ public class SetPlayingCommand extends Command {
             builder.append(args[i]).append(" ");
         }
         final String playing = builder.toString().trim();
-        NightShadeBot.getBot().getJda().getPresence().setGame(Game.of(Game.GameType.DEFAULT, playing));
+        nightShadeBot.getJda().getPresence().setGame(Game.of(Game.GameType.DEFAULT, playing));
         channel.sendMessage("Done!").queue();
+        return;
     }
 
     @Override
@@ -35,7 +42,7 @@ public class SetPlayingCommand extends Command {
 
     @Override
     public Role requiredRole() {
-        return NightShadeBot.getBot().getGuild().getRolesByName("Administrator", false).get(0);
+        return nightShadeBot.getGuild().getRolesByName("Administrator", false).get(0);
     }
 
     private EmbedBuilder getUsage() {
