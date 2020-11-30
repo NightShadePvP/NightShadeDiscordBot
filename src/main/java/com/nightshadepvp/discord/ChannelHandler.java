@@ -1,8 +1,9 @@
 package com.nightshadepvp.discord;
 
-import net.dv8tion.jda.core.entities.Category;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.VoiceChannel;
+
+import net.dv8tion.jda.api.entities.Category;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 
 /**
  * Created by Blok on 3/31/2018.
@@ -41,6 +42,14 @@ public class ChannelHandler {
 
     public VoiceChannel getStaffMeetingChannel(){
         return nightShadeBot.getJda().getVoiceChannelById(483037056675741712L);
+    }
+
+    public MessageChannel getStaffChatChannel(){
+        return nightShadeBot.getJda().getTextChannelById(291676932930797570L);
+    }
+
+    public MessageChannel getNeedSpecChannel(){
+        return nightShadeBot.getJda().getTextChannelById(744363715847258222L);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.nightshadepvp.discord.utils;
 
 import com.nightshadepvp.discord.NightShadeBot;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 
 /**
  * Created by Blok on 8/17/2018.

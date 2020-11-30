@@ -2,8 +2,8 @@ package com.nightshadepvp.discord.cmd;
 
 import com.nightshadepvp.discord.NightShadeBot;
 import com.nightshadepvp.discord.Settings;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.*;
 
 import java.awt.*;
 
@@ -30,7 +30,7 @@ public class SetPlayingCommand extends Command {
             builder.append(args[i]).append(" ");
         }
         final String playing = builder.toString().trim();
-        nightShadeBot.getJda().getPresence().setGame(Game.of(Game.GameType.DEFAULT, playing));
+        nightShadeBot.getJda().getPresence().setActivity(Activity.playing(playing));
         channel.sendMessage("Done!").queue();
         return;
     }

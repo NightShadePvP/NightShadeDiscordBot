@@ -2,8 +2,8 @@ package com.nightshadepvp.discord.cmd;
 
 import com.nightshadepvp.discord.NightShadeBot;
 import com.nightshadepvp.discord.Settings;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.*;
 
 import java.awt.*;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +51,7 @@ public class PromoteCommand extends Command {
         }
         nightShadeBot.getExecutorService().schedule(() -> message.delete().queue(), 1L, TimeUnit.SECONDS);
         nightShadeBot.getChannelHandler().getRoleLogChannel().sendMessage(this.getOutput(nightShadeBot.getGuild().getMember(targetMember), newRole).build()).queue();
-        nightShadeBot.getGuild().getController().addRolesToMember(nightShadeBot.getGuild().getMember(targetMember), newRole).queue();
+        nightShadeBot.getGuild().addRoleToMember(nightShadeBot.getGuild().getMember(targetMember), newRole).queue();
         targetMember.openPrivateChannel().queue(privateChannel -> privateChannel.sendMessage("You have been promoted to " + newRole.getName() + "! Congratulations!").queue());
     }
 

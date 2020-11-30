@@ -4,9 +4,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nightshadepvp.discord.cmd.CommandHandler;
 import com.nightshadepvp.discord.utils.ServerUtils;
-import net.dv8tion.jda.core.*;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.*;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import org.apache.commons.lang3.Validate;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
@@ -27,11 +28,13 @@ public class NightShadeBot {
     private ScheduledExecutorService executorService;
 
     public NightShadeBot() throws LoginException, InterruptedException {
-        final JDABuilder builder = new JDABuilder(AccountType.BOT);
-        builder.setToken(Settings.TOKEN);
+        final JDABuilder builder = JDABuilder.createDefault(Settings.TOKEN);
         builder.setAutoReconnect(true);
         builder.setStatus(OnlineStatus.DO_NOT_DISTURB);
-        this.jda = builder.buildBlocking();
+        builder.setActivity(Activity.playing("uhc1.nightshadepvp.com"));
+        builder.setChunkingFilter(ChunkingFilter.NONE);
+        this.jda = builder.build();
+        jda.awaitReady();
         this.handler = new CommandHandler(this);
         this.channelHandler = new ChannelHandler(this);
         this.jda.addEventListener(new Listener(this));
@@ -114,7 +117,10 @@ public class NightShadeBot {
 
                     Guild guild = getGuild();
                     User user = jda.getUserById(id);
-                    guild.getController().addRolesToMember(guild.getMember(user), ServerUtils.getRole(rank), ServerUtils.getRole("Linked")).queue();
+                    Validate.notNull(user, "The user wasn't found!");
+                    Member member = guild.getMember(user);
+                    guild.addRoleToMember(member, ServerUtils.getRole(rank)).queue();
+                    guild.addRoleToMember(member, ServerUtils.getRole("Linked")).queue();
                     user.openPrivateChannel().queue(privateChannel -> {
                         privateChannel.sendMessage("Your Discord is now linked to the minecraft account: " + ign).queue();
                         privateChannel.sendMessage("If you want to unlink your account, open a ticket and ask staff the unlink your account.").queue();
@@ -135,9 +141,17 @@ public class NightShadeBot {
                     builder.addField("**MatchPost**", jsonObject.get("matchpost").getAsString(), true);
                     jda.getTextChannelById("593865007700377640").sendMessage(builder.build()).queue();
                     getGuild().getRolesByName("NewGame", false).get(0).getManager().setMentionable(false).queue();
+                }else if (channel.equalsIgnoreCase("needspec")){
+                    JsonObject jsonObject = jsonParser.parse(message).getAsJsonObject();
+
+                    String sender = jsonObject.get("player").getAsString();
+                    int players = jsonObject.get("amount").getAsInt();
+                    String server = jsonObject.get("server").getAsString();
+                    MessageChannel messageChannel = getChannelHandler().getNeedSpecChannel();
+                    messageChannel.sendMessage(ServerUtils.getRole("Trial").getAsMention() + ", " + ServerUtils.getRole("Staff").getAsMention() + ", " + ServerUtils.getRole("Senior").getAsMention() + ": " + sender + " needs specs on " + server + " with " + players + " players!").queue();
                 }
             }
-        }, "punishments", "playerLink", "matches");
+        }, "punishments", "playerLink", "matches", "needspec");
     }
 
     public CommandHandler getCommandHandler() {

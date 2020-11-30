@@ -4,8 +4,8 @@ import com.nightshadepvp.discord.NightShadeBot;
 import com.nightshadepvp.discord.Settings;
 import com.nightshadepvp.discord.utils.ParseUtils;
 import com.nightshadepvp.discord.utils.ServerUtils;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.*;
 
 import java.awt.*;
 import java.util.concurrent.TimeUnit;

@@ -1,11 +1,11 @@
 package com.nightshadepvp.discord.cmd;
 
 import com.nightshadepvp.discord.NightShadeBot;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Role;
 
 import java.awt.*;
 
@@ -23,10 +23,10 @@ public class NewGameCommand extends Command {
     @Override
     public void run(final Member member, final String[] args, final MessageChannel channel, final Message message) {
         if (member.getRoles().contains(nightShadeBot.getGuild().getRolesByName("NewGame", false).get(0))) {
-            nightShadeBot.getGuild().getController().removeRolesFromMember(member, nightShadeBot.getGuild().getRolesByName("NewGame", false).get(0)).queue();
+            nightShadeBot.getGuild().removeRoleFromMember(member, nightShadeBot.getGuild().getRolesByName("NewGame", false).get(0)).queue();
             channel.sendMessage(this.toggleOff(member).build()).queue();
         } else {
-            nightShadeBot.getGuild().getController().addRolesToMember(member, nightShadeBot.getGuild().getRolesByName("NewGame", false).get(0)).queue();
+            nightShadeBot.getGuild().addRoleToMember(member, nightShadeBot.getGuild().getRolesByName("NewGame", false).get(0)).queue();
             channel.sendMessage(this.toggleOn(member).build()).queue();
         }
     }

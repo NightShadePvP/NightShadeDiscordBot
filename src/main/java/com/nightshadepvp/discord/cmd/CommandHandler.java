@@ -5,10 +5,10 @@ import com.nightshadepvp.discord.cmd.staff.GetAttendanceCommand;
 import com.nightshadepvp.discord.cmd.staff.StartUHC1Command;
 import com.nightshadepvp.discord.cmd.staff.StartUHC2Command;
 import com.nightshadepvp.discord.cmd.staff.WhitelistCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
 
 import java.awt.*;
 import java.util.ArrayList;
